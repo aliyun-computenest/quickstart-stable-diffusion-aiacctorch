@@ -60,6 +60,14 @@ Negative prompt: 水彩,漫画,扫描件,简朴的画作,动画截图,3D,像素�
 aiacctorch支持LORA加速，可以在prompt中加入LORA支持文本:  <lora:iuV35.uv1P:1>
 ![image.png](https://intranetproxy.alipay.com/skylark/lark/0/2023/png/125679/1685071552670-8b89d82c-69e7-4c64-abf0-870dfd9a5c99.png#clientId=u29481c1f-53df-4&from=paste&height=1101&id=u844f82ab&originHeight=1101&originWidth=1516&originalType=binary&ratio=1&rotation=0&showTitle=false&size=1196527&status=done&style=none&taskId=ud3b243fe-81a3-4895-befb-2c9aa7e1596&title=&width=1516)
 可见在aiacctorch加速优化下，LORA加载后性能与加载前相同。
+
+## Controlnet功能试用
+Controlnet可以帮助我们生成与原始图相似风格或相似布局的图片，这里以canny为例介绍controlnet功能。
+打开Controlnet选项卡，选择controlType为Canny，并上传一张图片，以LENA图为例，进行如下设置：![image.png](https://intranetproxy.alipay.com/skylark/lark/0/2023/png/125679/1686294341385-9c58c80d-1f30-41be-b1a2-f73ad9046885.png#clientId=u56e8245a-4a13-4&from=paste&height=537&id=u476b6939&originHeight=1073&originWidth=779&originalType=binary&ratio=2&rotation=0&showTitle=false&size=824418&status=done&style=none&taskId=u52d09408-87e2-497f-bb44-a3f27e11561&title=&width=389.5)
+点击生成：
+![image.png](https://intranetproxy.alipay.com/skylark/lark/0/2023/png/125679/1686294433439-a180976e-dc7a-4b55-a815-3117128264a6.png#clientId=u56e8245a-4a13-4&from=paste&height=582&id=u717cec98&originHeight=1163&originWidth=1627&originalType=binary&ratio=2&rotation=0&showTitle=false&size=1540155&status=done&style=none&taskId=uc7b848b1-962c-4f81-859a-f6515c864d9&title=&width=813.5)
+可见性能为2.36s。
+
 ## 禁用AIACC加速
 我们也可以在settings中禁用aiacctorch。点击settings选项卡，选中aiacctorch，去掉"Apply Aiacctorch in Unet to speedup the whole network inference when loading models"前方的勾，而后点击应用设置：
 ![image.png](https://intranetproxy.alipay.com/skylark/lark/0/2023/png/125679/1685068221633-96fc9ca8-f591-49f0-80f7-91ced758806c.png#clientId=u98f890e2-bf6b-4&from=paste&height=1132&id=uf0ac43fa&originHeight=1132&originWidth=1522&originalType=binary&ratio=1&rotation=0&showTitle=false&size=996312&status=done&style=none&taskId=uf27eaf39-e961-4260-88ed-1ee7821c8cc&title=&width=1522)
@@ -67,3 +75,18 @@ aiacctorch支持LORA加速，可以在prompt中加入LORA支持文本:  <lora:iu
 ![image.png](https://intranetproxy.alipay.com/skylark/lark/0/2023/png/125679/1685070075626-8025d0b9-5744-436a-a193-6c51e653a31e.png#clientId=u98f890e2-bf6b-4&from=paste&height=1096&id=u0f1aa2ec&originHeight=1096&originWidth=1512&originalType=binary&ratio=1&rotation=0&showTitle=false&size=1188283&status=done&style=none&taskId=u524e5f9b-2bfb-4e71-b065-329bed77c95&title=&width=1512)
 禁用AIACC后，我们也可增加LORA权重进行推理，得到耗时为**2.35s**，大幅高于AIACC优化后的延迟，AIACC加速可达**2.67倍**:
 ![image.png](https://intranetproxy.alipay.com/skylark/lark/0/2023/png/125679/1685071972421-000239fc-f098-4b63-939d-1c073d8626d2.png#clientId=u29481c1f-53df-4&from=paste&height=1098&id=u4417d568&originHeight=1098&originWidth=1508&originalType=binary&ratio=1&rotation=0&showTitle=false&size=1183686&status=done&style=none&taskId=ubc32cb56-3370-4511-be29-6683430e23e&title=&width=1508)
+
+# F&Q
+### 如何重启服务
+- 可使用如下命令停止服务:
+```shell
+systemctl stop sdwebui 
+```
+- 可使用如下命令打开服务:
+```shell
+systemctl start sdwebui
+```
+### 如何查看log
+```shell
+cat /var/log/sdwebui.log
+```
