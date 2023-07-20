@@ -105,23 +105,39 @@ Controlnet可以帮助我们生成与原始图相似风格或相似布局的图�
    ![image.png](23.png)
 
    4. 进入终端后，切换成root用户： 
-      ```python
+   
+      ```
       sudo su
       ```
       
    5. 下载如下git链接，并将该项目放到路径/root/stable-diffusion-webui/extensions中，若git clone速度较慢，使用代理：将下面的git链接改成[https://ghproxy.com/https://github.com/d8ahazard/sd_dreambooth_extension.git](https://ghproxy.com/https://github.com/d8ahazard/sd_dreambooth_extension.git)。【阿里云不对您在镜像上使用的第三方模型的合法性、安全性、准确性进行任何保证，并不对由此引发的任何损害承担责任；您应自觉遵守在镜像上安装的第三方模型的用户协议、使用规范和相关法律法规，并就使用第三方模型的合法性、合规性自行承担相关责任。】
-      ```python
-      https://github.com/d8ahazard/sd_dreambooth_extension.git
-      ```
+   
    6. 安装完成后，/root/stable-diffusion-webui/extensions文件夹下包含sd_dreambooth_extension文件夹，然后执行如下命令：
-      ```python
+
+      ```
       pip install tensorflow
-      wget https://aiacc-training.oss-cn-hangzhou.aliyuncs.com/yaoxing/train_dreambooth.py -O /root/stable-diffusion-webui/extensions/sd_dreambooth_extension/dreambooth/train_dreambooth.py 
+      ```
+      
+      ```
+      wget https://aiacc-training.oss-cn-hangzhou.aliyuncs.com/yaoxing/train_dreambooth.py -O /root/stable-diffusion-webui/extensions/sd_dreambooth_extension/dreambooth/train_dreambooth.py
+      ```
+      
+      ```
       wget https://ali-perseus-release.oss-cn-huhehaote.aliyuncs.com/sd_utils/utils.py -O /root/stable-diffusion-webui/extensions/sd_dreambooth_extension/dreambooth/utils/utils.py
+      ```
+      
+      ```
       wget https://ali-perseus-release.oss-cn-huhehaote.aliyuncs.com/sd_utils/image_utils.py -O /root/stable-diffusion-webui/extensions/sd_dreambooth_extension/dreambooth/utils/image_utils.py
+      ```
+      
+      ```
       wget https://ali-perseus-release.oss-cn-huhehaote.aliyuncs.com/sd_utils/log_parser.py -O /root/stable-diffusion-webui/extensions/sd_dreambooth_extension/helpers/log_parser.py
+      ```
+      
+      ```
       wget https://aiacc-training.oss-cn-hangzhou.aliyuncs.com/yaoxing/compiler.py -O /workspace/miniconda/lib/python3.10/site-packages/triton/compiler.py
       ```
+      
    7. 执行完命令后，按照第二节流程点击endpoint进入页面，选择扩展插件按钮对插件进行调整（**若未发现sd_dreambooth_extension插件可点击重启用户界面的按钮**），将sd_dreamboooth_extension插件勾选，并取消LoRA/Lora插件勾选（sd_dreamboooth_extension中自带lora），**训练完成后进行推理时，需要设置回原来的配置（即取消sd_dreamboooth_extension插件勾选，并勾选LoRA/Lora插件）**。
    ![image.png](24.png)
 
