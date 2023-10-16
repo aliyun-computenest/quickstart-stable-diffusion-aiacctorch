@@ -15,6 +15,9 @@ aiacctorch支持优化基于Torch框架搭建的模型，通过对模型的计�
 访问[计算巢实例](https://computenest.console.aliyun.com/user/cn-hangzhou/recommendService)，点击创建
 **Stable diffusion AIACC加速社区版。**
 ![image.png](2.png)
+选择所需版本，单机版或多机集群版:
+![image.png](2.1.png)
+
 选择所需地域:
 ![image.png](3.png)
 勾选实例类型，并填写实例密码：
@@ -37,33 +40,40 @@ aiacctorch支持优化基于Torch框架搭建的模型，通过对模型的计�
 ![image.png](9.png)
 进入测试页面:
 ![image.png](10.png)
-输入中文prompt，例如:
+***注意，由于taiyi中文模型很久没有更新，不适配webui1.6以上版本，因此将其移除。***
+输入prompt，例如:
 ```bash
-铁马冰河入梦来，概念画，科幻，玄幻，3D
+city made out of glass : : close shot : : 3 5 mm, realism, octane render, 8 k, exploration, cinematic, trending on artstation, realistic, 3 5 mm camera, unreal engine, hyper detailed, photo – realistic maximum detail, volumetric light, moody cinematic epic concept art, realistic matte painting, hyper photorealistic, concept art, volumetric light, cinematic epic, octane render, 8 k, corona render, movie concept art, octane render, 8 k, corona render, cinematic, trending on artstation, movie concept art, cinematic composition, ultra – detailed, realistic, hyper – realistic, volumetric lighting, 8 k
 ```
 点击生成，即可生成如下图片：
 ![image.png](11.png)
 
-此处我们使用了aiacctorch加速了模型，可以看到单张图片推理时间为**0.88s**。**(注意，首次应用aiacctorch进行图片生成，或者切换模型后的首次图片生成，会多占用30s时间，以进行aiacctorch模型加载)。**
+此处我们使用了aiacctorch加速了模型，可以看到单张图片推理时间为**0.88s**。**(注意，首次应用aiacctorch进行图片生成，或者切换模型后的首次图片生成，会多占用10s时间，以进行aiacctorch模型加载)。**
 ### 模型切换
-在上述的模型下载过程中，我们下载了3个模型:
+在测试镜像中，我们预装了7个模型 :
 
-- Taiyi-Stable-Diffusion-1B-Chinese-v0.1：中文Stable Diffusion模型
-- Taiyi-Stable-Diffusion-1B-Anime-Chinese-v0.1：中文Stable Diffusion动漫模型
-- v1-5-pruned-emaonly.safetensors：Stable Diffusion v1.5模型
+- 512-base-ema.safetensors：512x512 Stable Diffusion 2.0模型
+- 768-v-ema.safetensors：768x768 Stable Diffusion 2.0模型
+- openjourneyV4.ckpt：openjourney 模型
+- sd_xl_base_1.0_0.9vae.safetensors：SDXL base模型
+- sd_xl_refiner_1.0_0.9vae.safetensors：SDXL refiner模型
+- v1-5-pruned-emaonly.safetensors：Stable Diffusion 1.5模型
+- v2-1_768-ema-pruned-fp16.safetensors：Stable Diffusion 2.1模型
 
-我们可以根据输入文字以及生成图片风格，切换模型进行模型推理，例如我们可以通过左上侧的选项卡，选择Taiyi-Stable-Diffusion-1B-Anime-Chinese-v0.1模型：
+我们可以根据输入文字以及生成图片风格，切换模型进行模型推理，例如我们可以通过左上侧的选项卡，选择
+512-base-ema.safetensors模型：
 ![image.png](12.png)
-而后输入提示词和反向提示词:
+而后输入提示词:
 ```bash
-1个女孩,绿眼,棒球帽,金色头发,闭嘴,帽子,看向阅图者,短发,简单背景,单人,上半身,T恤
-Negative prompt: 水彩,漫画,扫描件,简朴的画作,动画截图,3D,像素风,原画,草图,手绘,铅笔
+city made out of glass : : close shot : : 3 5 mm, realism, octane render, 8 k, exploration, cinematic, trending on artstation, realistic, 3 5 mm camera, unreal engine, hyper detailed, photo – realistic maximum detail, volumetric light, moody cinematic epic concept art, realistic matte painting, hyper photorealistic, concept art, volumetric light, cinematic epic, octane render, 8 k, corona render, movie concept art, octane render, 8 k, corona render, cinematic, trending on artstation, movie concept art, cinematic composition, ultra – detailed, realistic, hyper – realistic, volumetric lighting, 8 k
 ```
-则可生成如下图所示的动漫风格图像:
+则可生成如下图所示的图像:
 ![image.png](13.png)
 ### LORA功能试用
 aiacctorch支持LORA加速，可以在prompt中加入LORA支持文本:  <lora:iuV35.uv1P:1>
+
 ![image.png](14.png)
+
 可见在aiacctorch加速优化下，LORA加载后性能与加载前相同。
 
 ### Controlnet功能试用
@@ -74,17 +84,16 @@ Controlnet可以帮助我们生成与原始图相似风格或相似布局的图�
 
 点击生成：
 ![image.png](16.png)
-可见性能为2.36s。
+可见性能为1.27s。
 
 ### 禁用AIACC加速
 我们也可以在settings中禁用aiacctorch。点击settings选项卡，选中aiacctorch，去掉"Apply Aiacctorch in Unet to speedup the whole network inference when loading models"前方的勾，而后点击应用设置：
 ![image.png](17.png)
 
-重复图片生成操作，可见推理时间为**1.97s**：
+而后在控制台的运维管理中点击重启服务：
 ![image.png](18.png)
+稍等片刻即可
 
-禁用AIACC后，我们也可增加LORA权重进行推理，得到耗时为**2.35s**，大幅高于AIACC优化后的延迟，AIACC加速可达**2.67倍**:
-![image.png](19.png)
 
 ## 推理性能数据汇总
 以下是在A10上使用webUI测得的AIACC同pytorch的性能比例，注：以下数据为关闭了生成图输出到文件的过程
