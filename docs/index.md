@@ -12,10 +12,8 @@ aiacctorch支持优化基于Torch框架搭建的模型，通过对模型的计�
 ## 计算巢实例创建
 
 ### 创建实例
-访问[计算巢实例](https://computenest.console.aliyun.com/user/cn-hangzhou/recommendService)，点击创建
-**Stable diffusion AIACC加速社区版。**
-![image.png](2.png)
-选择所需版本，单机版或多机集群版:
+点击创建
+**[Stable diffusion AIACC加速社区版](https://computenest.console.aliyun.com/service/instance/create/cn-hangzhou?type=user&ServiceId=service-7c7e05fc6d2b42929821)** 实例，选择所需版本，单机版或多机集群版:
 ![image.png](2.1.png)
 
 选择所需地域:
